@@ -1,82 +1,507 @@
-<body bgcolor="Yellow" text="008000">
-    <h2>CURSO DE HTML Y JAVASCRIPT</h2>
-    <p>SENA REGIONAL CAUCA</p>
-    <p>CENTRO DE TELEINFORMÁTICA Y PRODUCCIÓN INDUSTRIAL</p>
-    
-    <h1>Tamaño Etiqueta H1</h1>
-    <h2>Tamaño Etiqueta H2</h2>
-    <h3>Tamaño Etiqueta H3</h3>
-    <h4>Tamaño Etiqueta H4</h4>
-    <h5>Tamaño Etiqueta H5</h5>
-    <h6>Tamaño Etiqueta H6</h6>
-    
-    <h1 align="center">Texto Centro</h1>
-    <h1 align="right">Texto a la Derecha</h1>
-    <h1 align="justify">Texto Justificado</h1>
-    
-    <font size="+1">Texto con fuente tamaño +1</font> <br>
-    <font size="+2">Texto con fuente tamaño +2</font> <br>
-    <font size="-1">Texto con fuente tamaño -1</font> <br>
-    <font size="-2">Texto con fuente tamaño -2</font> <br>
-    
-    <font color="red">Color Rojo</font> <br>
-    <font color="#ff0000">Color Rojo (Hexadecimal)</font>
-    
-<hr>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Registro de Números</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-    <font face="Arial Black">Texto con Arial Black</font> <br>
-    <font face="Tahoma">Texto con Tahoma</font> <br>
-    <font face="Stencil">Texto con Stencil</font> <br>
-    <font face="Algerian">Texto con Algerian</font> <br>
-    
-    <font size="+2" color="blue" face="Broadway">Todos los Parámetros</font>
-    
-    <pre>
-Este           Texto tiene
-Varios   espacios            y retornos       de       carro
-    </pre>
-    
-    <p>Parrafo 1</p>
-    <p>Parrafo 2</p>
-    
-    <p align="center">Parrafo alineado al centro</p>
-    <p align="right">Parrafo alineado a la derecha</p>
-    <p align="justify">Parrafo Justificado</p>
-    
-    <center>Texto centrado</center>
-    <b>Texto en Negrita</b><br>
-    <i>Texto en Cursiva o Italica</i><br>
-    <u>Texto Subrayado</u><br>
-    Texto <sub>Subíndice</sub> <br>
-    Texto <sup>Superíndice</sup> <br>
-    <s>Texto Tachado</s>
-    
-    <font size="+1" color="purple" face="Algerian">
-        <b><i><u><center>Cursos Sena 2012</center></u></i></b>
-    </font>
-    
-    <p>Popayán <font color="red">Ciudad blanca</font> y su más bella Semana Santa</p>
-    
-    <ol type="1" start="5">
-        <li>Dirección de Información</li>
-        <li>Planeación</li>
-        <li>Vicepresidencia Financiera</li>
-        <li>Comunicaciones</li>
-    </ol>
-    
-    <ul type="disc">
-        <li>Futbol</li>
-        <li>Natación</li>
-        <li>Tenis</li>
-        <li>Ciclismo</li>
-    </ul>
-    
-    <dl>
-        <dt>Planeación:</dt>
-        <dd>Encargada de ejecución y revisar los planes de inversión</dd>
-        <dt>Información:</dt>
-        <dd>Encargada de diseñar, implementar y ejecutar los planes de desarrollo informático</dd>
-        <dt>Recursos Humanos:</dt>
-        <dd>Encargada de los asuntos relacionados con el recurso humano.</dd>
-    </dl>
+    <!-- Header -->
+    <header class="bg-slate-800/80 backdrop-blur border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-ticket text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Control de Números</h1>
+                    <p class="text-xs text-slate-400">Registro y consulta rápida de jugadas</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs -->
+            <nav class="flex bg-slate-700/50 p-1 rounded-xl border border-slate-600">
+                <button onclick="switchTab('register')" id="tab-register" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow-md">
+                    <i class="fa-solid fa-plus-circle mr-2"></i>Registrar
+                </button>
+                <button onclick="switchTab('query')" id="tab-query" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-search mr-2"></i>Ver Detalle
+                </button>
+                <button onclick="switchTab('history')" id="tab-history" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-list-ul mr-2"></i>Historial
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-grow">
+        
+        <!-- Notification Modal / Custom Alert Box -->
+        <div id="custom-alert" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-center transform transition-all scale-100">
+                <div id="alert-icon" class="w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-4 text-xl">
+                    <i class="fa-solid fa-info"></i>
+                </div>
+                <h3 id="alert-title" class="text-lg font-bold text-white mb-2">Mensaje</h3>
+                <p id="alert-message" class="text-slate-300 text-sm mb-6"></p>
+                <button onclick="closeAlert()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition-all shadow-lg shadow-indigo-600/30">
+                    Entendido
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: REGISTER -->
+        <section id="section-register" class="space-y-6">
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl">
+                <div class="max-w-md mx-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-white">Nueva Jugada</h2>
+                        <p class="text-sm text-slate-400 mt-1">Ingresa un número del 1 al 100 y su cantidad asociada.</p>
+                    </div>
+
+                    <form id="bet-form" onsubmit="handleRegister(event)" class="space-y-5">
+                        <div>
+                            <label for="input-number" class="block text-sm font-medium text-slate-300 mb-2">
+                                Número (1 al 100)
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                                    <i class="fa-solid fa-hashtag"></i>
+                                </span>
+                                <input type="number" id="input-number" min="1" max="100" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-lg font-semibold"
+                                    placeholder="Ej. 45">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="input-amount" class="block text-sm font-medium text-slate-300 mb-2">
+                                Cantidad / Monto
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                </span>
+                                <input type="number" id="input-amount" min="1" step="any" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-lg font-semibold"
+                                    placeholder="Ej. 150.00">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold py-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform active:scale-[0.98]">
+                            Guardar Registro
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Stats / Recent Activity Preview -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="bg-emerald-500/20 text-emerald-400 p-3.5 rounded-xl text-xl">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Acumulado</p>
+                        <h4 id="stat-total-amount" class="text-2xl font-bold text-white mt-0.5">$0.00</h4>
+                    </div>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="bg-blue-500/20 text-blue-400 p-3.5 rounded-xl text-xl">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Registros Totales</p>
+                        <h4 id="stat-total-records" class="text-2xl font-bold text-white mt-0.5">0</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: QUERY / VER DETALLE -->
+        <section id="section-query" class="hidden space-y-6">
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl">
+                <div class="max-w-md mx-auto mb-8">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-white">Consultar Número</h2>
+                        <p class="text-sm text-slate-400 mt-1">Digita el número que jugaste para ver todos sus detalles.</p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="relative flex-grow">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                                <i class="fa-solid fa-search"></i>
+                            </span>
+                            <input type="number" id="query-number-input" min="1" max="100"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-lg font-semibold"
+                                placeholder="Número a buscar (1-100)">
+                        </div>
+                        <button onclick="handleQuery()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 rounded-xl font-semibold transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center">
+                            <i class="fa-solid fa-arrow-right sm:mr-2"></i>
+                            <span class="hidden sm:inline">Buscar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Query Results Area -->
+                <div id="query-results-container" class="hidden border-t border-slate-700 pt-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900/60 p-4 rounded-2xl border border-slate-700/60 mb-6 gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Número consultado</span>
+                            <div class="flex items-baseline gap-2 mt-1">
+                                <span id="query-result-badge" class="bg-indigo-600 text-white text-xl font-bold px-3 py-1 rounded-lg shadow">#--</span>
+                                <span class="text-sm text-slate-300" id="query-result-count">0 registros encontrados</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800 px-5 py-3 rounded-xl border border-slate-700 w-full sm:w-auto text-right">
+                            <span class="text-xs text-slate-400 block font-medium uppercase tracking-wider">Suma Total Jugada</span>
+                            <span id="query-result-total" class="text-2xl font-bold text-emerald-400">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-700">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-900/90 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                                    <th class="py-3 px-4 font-semibold">#</th>
+                                    <th class="py-3 px-4 font-semibold">Cantidad</th>
+                                    <th class="py-3 px-4 font-semibold">Fecha y Hora</th>
+                                    <th class="py-3 px-4 font-semibold text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="query-table-body" class="divide-y divide-slate-700/50 text-sm">
+                                <!-- Dynamic rows inserted via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Empty State for Query -->
+                <div id="query-empty-state" class="text-center py-12 border-t border-slate-700">
+                    <div class="w-16 h-16 bg-slate-900 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <p class="text-slate-400 text-sm font-medium">Introduce un número arriba para consultar su detalle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: HISTORY / LIST OF ALL -->
+        <section id="section-history" class="hidden space-y-6">
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Historial General</h2>
+                        <p class="text-sm text-slate-400 mt-1">Todos los registros guardados en el sistema.</p>
+                    </div>
+                    <button onclick="confirmClearHistory()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-trash-can"></i> Limpiar Todo
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/90 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                                <th class="py-3 px-4 font-semibold">Número</th>
+                                <th class="py-3 px-4 font-semibold">Cantidad</th>
+                                <th class="py-3 px-4 font-semibold">Fecha y Hora</th>
+                                <th class="py-3 px-4 font-semibold text-right">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-slate-700/50 text-sm">
+                            <!-- Dynamic history rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="history-empty" class="hidden text-center py-12">
+                    <div class="w-16 h-16 bg-slate-900 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <p class="text-slate-400 text-sm font-medium">No hay registros guardados todavía.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800/40 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>Sistema Interactivo de Registro de Números &bull; Almacenamiento Local Seguro</p>
+    </footer>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // LocalStorage Key
+        const STORAGE_KEY = 'number_bets_records_v1';
+
+        // Initialize application state on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateGlobalStats();
+            renderHistoryTable();
+            
+            // Allow Enter key press in query input
+            document.getElementById('query-number-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleQuery();
+                }
+            });
+        });
+
+        // Tab Navigation Controller
+        function switchTab(tabName) {
+            const sections = ['register', 'query', 'history'];
+            sections.forEach(sec => {
+                const element = document.getElementById(`section-${sec}`);
+                const btn = document.getElementById(`tab-${sec}`);
+                if (sec === tabName) {
+                    element.classList.remove('hidden');
+                    btn.className = "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow-md";
+                } else {
+                    element.classList.add('hidden');
+                    btn.className = "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-slate-300 hover:text-white";
+                }
+            });
+
+            if (tabName === 'history') {
+                renderHistoryTable();
+            }
+        }
+
+        // Custom Modal Alert Box (replaces standard alert)
+        function showAlert(title, message, isSuccess = true) {
+            const modal = document.getElementById('custom-alert');
+            const titleEl = document.getElementById('alert-title');
+            const msgEl = document.getElementById('alert-message');
+            const iconEl = document.getElementById('alert-icon');
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            if (isSuccess) {
+                iconEl.className = "w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 text-xl";
+                iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                iconEl.className = "w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4 text-xl";
+                iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeAlert() {
+            document.getElementById('custom-alert').classList.add('hidden');
+        }
+
+        // Get all records from localStorage
+        function getRecords() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                return data ? JSON.parse(data) : [];
+            } catch (e) {
+                console.error("Error reading from localStorage", e);
+                return [];
+            }
+        }
+
+        // Save records array to localStorage
+        function saveRecords(records) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+            updateGlobalStats();
+        }
+
+        // Handle Register Form Submission
+        function handleRegister(e) {
+            e.preventDefault();
+            const numInput = document.getElementById('input-number');
+            const amountInput = document.getElementById('input-amount');
+
+            const number = parseInt(numInput.value);
+            const amount = parseFloat(amountInput.value);
+
+            if (isNaN(number) || number < 1 || number > 100) {
+                showAlert("Número inválido", "Por favor ingresa un número válido entre 1 y 100.", false);
+                return;
+            }
+
+            if (isNaN(amount) || amount <= 0) {
+                showAlert("Cantidad inválida", "La cantidad debe ser mayor a cero.", false);
+                return;
+            }
+
+            const newRecord = {
+                id: 'rec_' + Date.now() + '_' + Math.random().toString(36.2),
+                number: number,
+                amount: amount,
+                timestamp: new Date().toISOString()
+            };
+
+            const records = getRecords();
+            records.unshift(newRecord); // Add to beginning
+            saveRecords(records);
+
+            // Reset form
+            numInput.value = '';
+            amountInput.value = '';
+            numInput.focus();
+
+            showAlert("¡Guardado exitoso!", `Se registró correctamente el número #${number} con la cantidad de $${amount.toFixed(2)}.`);
+        }
+
+        // Update dashboard statistics
+        function updateGlobalStats() {
+            const records = getRecords();
+            const totalRecords = records.length;
+            const totalAmount = records.reduce((sum, item) => sum + item.amount, 0);
+
+            document.getElementById('stat-total-records').textContent = totalRecords;
+            document.getElementById('stat-total-amount').textContent = `$${totalAmount.toFixed(2)}`;
+        }
+
+        // Handle Query Functionality ("Ver Detalle")
+        function handleQuery() {
+            const queryInput = document.getElementById('query-number-input');
+            const targetNum = parseInt(queryInput.value);
+
+            if (isNaN(targetNum) || targetNum < 1 || targetNum > 100) {
+                showAlert("Búsqueda inválida", "Ingresa un número entre 1 y 100 para consultar.", false);
+                return;
+            }
+
+            const records = getRecords();
+            const filtered = records.filter(item => item.number === targetNum);
+
+            const container = document.getElementById('query-results-container');
+            const emptyState = document.getElementById('query-empty-state');
+            const badge = document.getElementById('query-result-badge');
+            const countLabel = document.getElementById('query-result-count');
+            const totalLabel = document.getElementById('query-result-total');
+            const tbody = document.getElementById('query-table-body');
+
+            badge.textContent = `#${targetNum}`;
+            countLabel.textContent = `${filtered.length} registro${filtered.length === 1 ? '' : 's'} encontrado${filtered.length === 1 ? '' : 's'}`;
+
+            const sumAmount = filtered.reduce((acc, curr) => acc + curr.amount, 0);
+            totalLabel.textContent = `$${sumAmount.toFixed(2)}`;
+
+            tbody.innerHTML = '';
+
+            if (filtered.length > 0) {
+                filtered.forEach((item, index) => {
+                    const dateObj = new Date(item.timestamp);
+                    const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-slate-800/40 transition-colors";
+                    row.innerHTML = `
+                        <td class="py-3 px-4 font-bold text-indigo-400">#${item.number}</td>
+                        <td class="py-3 px-4 font-semibold text-emerald-400">$${item.amount.toFixed(2)}</td>
+                        <td class="py-3 px-4 text-slate-400 text-xs">${dateStr}</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteRecord('${item.id}', true, ${targetNum})" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5 rounded-lg hover:bg-rose-500/10">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                container.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+            } else {
+                container.classList.remove('hidden');
+                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-400">No hay registros asociados a este número.</td></tr>`;
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Render History Table
+        function renderHistoryTable() {
+            const records = getRecords();
+            const tbody = document.getElementById('history-table-body');
+            const emptyDiv = document.getElementById('history-empty');
+            const tableWrapper = tbody.parentElement.parentElement;
+
+            tbody.innerHTML = '';
+
+            if (records.length === 0) {
+                tableWrapper.classList.add('hidden');
+                emptyDiv.classList.remove('hidden');
+                return;
+            }
+
+            tableWrapper.classList.remove('hidden');
+            emptyDiv.classList.add('hidden');
+
+            records.forEach(item => {
+                const dateObj = new Date(item.timestamp);
+                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-slate-800/40 transition-colors";
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-indigo-400">#${item.number}</td>
+                    <td class="py-3 px-4 font-semibold text-emerald-400">$${item.amount.toFixed(2)}</td>
+                    <td class="py-3 px-4 text-slate-400 text-xs">${dateStr}</td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="deleteRecord('${item.id}', false)" class="text-slate-500 hover:text-rose-400 transition-colors p-1.5 rounded-lg hover:bg-rose-500/10" title="Eliminar registro">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Delete single record
+        function deleteRecord(id, isQueryActive = false, queryNum = null) {
+            let records = getRecords();
+            records = records.filter(item => item.id !== id);
+            saveRecords(records);
+
+            renderHistoryTable();
+            if (isQueryActive && queryNum !== null) {
+                document.getElementById('query-number-input').value = queryNum;
+                handleQuery();
+            }
+        }
+
+        // Clear entire history
+        function confirmClearHistory() {
+            const records = getRecords();
+            if (records.length === 0) return;
+
+            if (confirm("¿Estás seguro de que deseas eliminar todo el historial guardado?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                updateGlobalStats();
+                renderHistoryTable();
+                
+                // Reset query view if active
+                document.getElementById('query-results-container').classList.add('hidden');
+                document.getElementById('query-empty-state').classList.remove('hidden');
+                document.getElementById('query-number-input').value = '';
+                
+                showAlert("Historial limpio", "Se han borrado todos los registros guardados.");
+            }
+        }
+    </script>
 </body>
+</html>
